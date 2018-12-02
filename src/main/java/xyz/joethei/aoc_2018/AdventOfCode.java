@@ -19,12 +19,13 @@ public class AdventOfCode {
 
         for(Day day : days) {
             System.out.println(day.getName());
-            System.out.println("partOne: " + day.partOne());
-            System.out.println("partTwo: " + day.partTwo());
+            List<String> input = readFile(day.getName());
+            System.out.println("partOne: " + day.partOne(input));
+            System.out.println("partTwo: " + day.partTwo(input));
         }
     }
 
-    static List<String> readFile(String name) {
+    private static List<String> readFile(String name) {
         List<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(name + ".txt"))) {
             for (String line = br.readLine(); line != null; line = br.readLine())
