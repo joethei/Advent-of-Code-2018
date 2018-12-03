@@ -16,6 +16,7 @@ public class AdventOfCode {
         List<Day> days = new ArrayList<>();
         days.add(new Day1());
         days.add(new Day2());
+        days.add(new Day3());
 
         for(Day day : days) {
             System.out.println(day.getName());
