@@ -22,13 +22,13 @@ public class AdventOfCode {
 
         for(Day day : days) {
             System.out.println(day.getName());
-            List<String> input = readFile(day.getName());
+            List<String> input = readFile("puzzle/" + day.getName());
             System.out.println("partOne: " + day.partOne(input));
             System.out.println("partTwo: " + day.partTwo(input));
         }
     }
 
-    private static List<String> readFile(String name) {
+    public static List<String> readFile(String name) {
         List<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(name + ".txt"))) {
             for (String line = br.readLine(); line != null; line = br.readLine())

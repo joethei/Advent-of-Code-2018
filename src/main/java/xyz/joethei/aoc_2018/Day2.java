@@ -40,7 +40,7 @@ public class Day2 implements Day{
                 }
             }
         }
-        return  count2 + "*" + count3 + "=" + count2 * count3;
+        return String.valueOf(count2 * count3);
     }
 
     @Override

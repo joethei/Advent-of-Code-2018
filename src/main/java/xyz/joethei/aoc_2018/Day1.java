@@ -7,7 +7,7 @@ import java.util.List;
  * @author Johannes Theiner <kontakt@joethei.xyz>
  * @since Day 1
  */
-class Day1 implements Day{
+public class Day1 implements Day{
 
     @Override
     public String getName() {
