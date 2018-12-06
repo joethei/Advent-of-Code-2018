@@ -3,6 +3,10 @@ package xyz.joethei.aoc_2018;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Johannes Theiner <kontakt@joethei.xyz>
+ * @since Day 6
+ */
 public class Day6 implements Day {
 
     private int fieldSize = 1000;
@@ -29,7 +33,7 @@ public class Day6 implements Day {
 
                     int distance = calculateManhattanDistance(currentX, x, currentY, y);
 
-                    if(distance == closest) {
+                    if (distance == closest) {
                         areas[x][y] = 0;
                     }
                     if (distance < closest) {
@@ -45,11 +49,11 @@ public class Day6 implements Day {
         List<Integer> edges = new ArrayList<>();
 
 
-        for (int i = 0; i < fieldSize-1; i++) {
-            int edge = areas[fieldSize-1][i];
+        for (int i = 0; i < fieldSize - 1; i++) {
+            int edge = areas[fieldSize - 1][i];
             edges.add(edge);
 
-            edge = areas[i][fieldSize-1];
+            edge = areas[i][fieldSize - 1];
             edges.add(edge);
 
             edge = areas[i][0];
@@ -63,7 +67,7 @@ public class Day6 implements Day {
         int[] count = new int[input.size()];
         for (int[] area : areas) {
             for (int area1 : area) {
-                if(!edges.contains(area1)) {
+                if (!edges.contains(area1)) {
                     count[area1 - 1]++;
                 }
             }
@@ -81,9 +85,33 @@ public class Day6 implements Day {
         return String.valueOf(max);
     }
 
+    private int less = 10000;
+    public void test() {
+        less = 32;
+    }
+
     @Override
     public String partTwo(List<String> input) {
-        return null;
+        int inarea = 0;
+        for (int x = 0; x < fieldSize; x++) {
+            for (int y = 0; y < fieldSize; y++) {
+                int distance = 0;
+                for (String line : input) {
+                    String[] split = line.split(", ");
+                    int posX = Integer.parseInt(split[0]);
+                    int posY = Integer.parseInt(split[1]);
+                    distance += calculateManhattanDistance(x, posX, y, posY);
+                }
+
+                if (distance < less) {
+                    inarea++;
+
+                }
+            }
+        }
+
+
+        return String.valueOf(inarea);
     }
 
     private int calculateManhattanDistance(int x0, int x1, int y0, int y1) {
