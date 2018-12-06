@@ -19,6 +19,7 @@ public class AdventOfCode {
         days.add(new Day3());
         days.add(new Day4());
         days.add(new Day5());
+        days.add(new Day6());
 
         for(Day day : days) {
             System.out.println(day.getName());
