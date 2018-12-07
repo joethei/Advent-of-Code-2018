@@ -1,9 +1,6 @@
 package xyz.joethei.aoc_2018;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Day7 implements Day {
 
@@ -12,9 +9,16 @@ public class Day7 implements Day {
         return "day7";
     }
 
+    private Map<Character, List<Character>> requirements = new HashMap<>();
+
     @Override
     public String partOne(List<String> input) {
-        Map<Character, List<Character>> requirements = new HashMap<>();
+
+        List<Character> one = new ArrayList<>();
+        List<Character> two = new ArrayList<>();
+        requirements.forEach((character, characters) -> Collections.sort(characters));
+
+
         for (String line : input) {
             String[] split = line.split(" ");
             Character finished = split[1].toCharArray()[0];
@@ -24,31 +28,35 @@ public class Day7 implements Day {
                 requirements.put(finished, new ArrayList<>());
             }
             requirements.get(finished).add(begin);
+            one.add(finished);
+            two.add(begin);
         }
+        System.out.println(requirements.toString());
 
-        char best = ' ';
-        for(Character key : requirements.keySet()) {
-            System.out.println(key);
-            for(List<Character> values : requirements.values()) {
-                if(!values.contains(key)) best = key;
-                else {
-
-                }
+        final char[] best = {' '};
+        one.forEach(character -> {
+            if(!two.contains(character)) {
+                best[0] = character;
             }
+        });
+        System.out.println("best: " + best[0]);
+
+        return recPart1("" + best[0]);
+    }
+
+
+    private String recPart1(String current) {
+        char next = ' ';
+        char cur = current.charAt(current.length()-1);
+        if(requirements.get(cur) == null ||requirements.get(cur).size() == 0) {
+            requirements.remove(cur);
+        }else {
+            next = requirements.get(cur).get(0);
+            requirements.get(cur).remove(0);
+            current += next;
         }
-        System.out.println(best);
-
-        for(Map.Entry<Character, List<Character>> entry : requirements.entrySet()) {
-            System.out.print(entry.getKey() + " : ");
-            for(Character c : entry.getValue()) {
-                System.out.print(c + " ");
-            }
-            System.out.println();
-        }
-
-
-
-        return null;
+        if(next != ' ') return recPart1(current + next);
+        else return current;
     }
 
     @Override

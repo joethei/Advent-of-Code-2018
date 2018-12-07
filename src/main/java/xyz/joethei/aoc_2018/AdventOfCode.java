@@ -14,16 +14,19 @@ public class AdventOfCode {
 
     public static void main(String[] args) {
         List<Day> days = new ArrayList<>();
+        /*
         days.add(new Day1());
         days.add(new Day2());
         days.add(new Day3());
         days.add(new Day4());
         days.add(new Day5());
         days.add(new Day6());
+        */
+        days.add(new Day7());
 
         for(Day day : days) {
             System.out.println(day.getName());
-            List<String> input = readFile("puzzle/" + day.getName());
+            List<String> input = readFile("examples/" + day.getName());
             System.out.println("partOne: " + day.partOne(input));
             System.out.println("partTwo: " + day.partTwo(input));
         }
