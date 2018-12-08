@@ -1,5 +1,7 @@
 package xyz.joethei.aoc_2018;
 
+import lombok.Getter;
+
 import java.util.*;
 
 public class Day7 implements Day {
@@ -9,55 +11,87 @@ public class Day7 implements Day {
         return "day7";
     }
 
-    private Map<Character, List<Character>> requirements = new HashMap<>();
+
+    List<Step> steps = new ArrayList<>();
+
+    @Getter
+    private class Step {
+        private char name;
+        private List<Character> childs = new ArrayList<>();
+        private List<Character> parents = new ArrayList<>();
+
+        Step(char name) {
+            this.name = name;
+        }
+    }
+
+    private Step getStep(char c) {
+        for(Step step : steps) {
+            System.out.println(step.name +  "==" + c);
+            if(step.name == c) {
+                System.out.println(true);
+                return step;
+            }
+        }
+        return null;
+    }
 
     @Override
     public String partOne(List<String> input) {
 
         List<Character> one = new ArrayList<>();
         List<Character> two = new ArrayList<>();
-        requirements.forEach((character, characters) -> Collections.sort(characters));
 
 
         for (String line : input) {
             String[] split = line.split(" ");
-            Character finished = split[1].toCharArray()[0];
-            Character begin = split[7].toCharArray()[0];
+            char finished = split[1].toCharArray()[0];
+            char begin = split[7].toCharArray()[0];
 
-            if(!requirements.containsKey(finished)) {
-                requirements.put(finished, new ArrayList<>());
+            Step step = getStep(finished);
+
+            if(step == null) {
+                step = new Step(finished);
             }
-            requirements.get(finished).add(begin);
-            one.add(finished);
-            two.add(begin);
+
+            step.getChilds().add(begin);
+            steps.add(step);
+
+
+            one.add(begin);
+            two.add(finished);
         }
-        System.out.println(requirements.toString());
+        System.out.println(steps.size());
+        for(Step step : steps) {
+            System.out.println(step.getName());
+            System.out.println(step.getChilds());
+            System.out.println(step.getParents());
+        }
 
         final char[] best = {' '};
-        one.forEach(character -> {
-            if(!two.contains(character)) {
+        two.forEach(character -> {
+            if (!one.contains(character)) {
                 best[0] = character;
             }
         });
         System.out.println("best: " + best[0]);
 
-        return recPart1("" + best[0]);
-    }
-
-
-    private String recPart1(String current) {
+        StringBuilder result = new StringBuilder();
         char next = ' ';
-        char cur = current.charAt(current.length()-1);
-        if(requirements.get(cur) == null ||requirements.get(cur).size() == 0) {
-            requirements.remove(cur);
-        }else {
-            next = requirements.get(cur).get(0);
-            requirements.get(cur).remove(0);
-            current += next;
+
+
+        while(true) {
+
+
+            break;
         }
-        if(next != ' ') return recPart1(current + next);
-        else return current;
+
+
+        char current = best[0];
+
+        return result.toString();
     }
+
 
     @Override
     public String partTwo(List<String> input) {
